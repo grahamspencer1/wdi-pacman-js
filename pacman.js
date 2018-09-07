@@ -39,7 +39,7 @@ var clyde = {
   edible: false
 };
 
-ghosts = [inky, blinky, pinky, clyde]
+ghosts = [inky, blinky, pinky, clyde];
 
 // Draw the screen functionality
 function drawScreen() {
@@ -65,10 +65,11 @@ function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
   console.log('(e) Eat 100 Dots');
+  console.log('(a) Eat ALL Dots');
   if (powerPellet > 0) {
     console.log('(p) Eat Power-Pellet');
   }
-
+  console.log("\n------------------");
   for (var i = 0; i < ghosts.length; i++) {
     if (ghosts[i].edible === true) {
       console.log('(' + (i + 1) + ')' + ' Eat ' + ghosts[i].name + ' (edible)');
@@ -82,7 +83,7 @@ function displayMenu() {
 
 function displayPrompt() {
   // process.stdout.write is similar to console.log except it doesn't add a new line after the text
-  process.stdout.write('\nWaka Waka :v '); // :v is the Pac-Man emoji.
+  process.stdout.write('\nWaka Waka \(\'< '); // ('< is the Pac-Man emoji.
 }
 
 
@@ -97,6 +98,12 @@ function eatOneHundredDots() {
   console.log('\nCHOOOOOOMP!');
   score += 1000;
   dots -= 100;
+}
+
+function eatAllDots() {
+  console.log('\nCHOOOOOOOOOMMMMMMMMMPPPPPPPPPPP!!!!!!!!');
+  score += 10000;
+  dots = 0;
 }
 
 function eatPowerPellet() {
@@ -134,7 +141,7 @@ function processInput(key) {
       if (dots > 0) {
         eatDot();
       } else {
-        console.log ('\nOut of dots!')
+        console.log ('\nNo more dots!')
       }
       break;
     case 'e':
@@ -142,6 +149,13 @@ function processInput(key) {
         eatOneHundredDots();
       } else {
         console.log ('\nNot enough dots!')
+      }
+      break;
+    case 'a':
+      if (dots > 0) {
+        eatAllDots();
+      } else {
+        console.log ('\nNo more dots!')
       }
       break;
     case 'p':
@@ -191,5 +205,5 @@ stdin.on('data', function(key) {
 
 // Player Quits
 process.on('exit', function() {
-  console.log('\n\nGame Over!\n');
+  console.log('\n\nGame Over!\nFinal Score: ' + score + '\n');
 });
