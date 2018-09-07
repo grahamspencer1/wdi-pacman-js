@@ -35,7 +35,7 @@ var clyde = {
   name: 'Clyde',
   colour: 'Orange',
   character: 'Pokey',
-  edible: true
+  edible: false
 };
 
 ghosts = [inky, blinky, pinky, clyde]
@@ -64,11 +64,27 @@ function displayMenu() {
   console.log('(d) Eat Dot');
   if (powerPellet > 0) {
     console.log('(p) Eat Power-Pellet');
+  }  
+  if (inky.edible === true) {
+    console.log('(1) Eat Inky (edible)');
+  } else {
+    console.log('(1) Eat Inky (inedible)');
   }
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
+  if (blinky.edible === true) {
+    console.log('(2) Eat Blinky (edible)');
+  } else {
+    console.log('(2) Eat Blinky (inedible)');
+  }
+  if (pinky.edible === true) {
+    console.log('(3) Eat Pinky (edible)');
+  } else {
+    console.log('(3) Eat Pinky (inedible)');
+  }
+  if (clyde.edible === true) {
+    console.log('(4) Eat Clyde (edible)');
+  } else {
+    console.log('(4) Eat Clyde (inedible)');
+  }
   console.log('(q) Quit');
 }
 
@@ -88,12 +104,16 @@ function eatPowerPellet() {
   console.log('\nYummy!');
   score += 50;
   powerPellet -= 1;
-  ghosts.edible = true;
+  ghosts.forEach(function(currentGhost) {
+    currentGhost.edible = true;
+  })
 }
 
 function eatGhost(ghost) {
-  if(ghosts.edible === true) {
-    return "Munch!";
+  if(ghost.edible === true) {
+    score += 200;
+    ghost.edible = false;
+    console.log('\nThe ' + ghost.character + ' ghost ' + ghost.name + ' was eaten!');
   } else {
     lives -= 1;
     console.log('\nThe ' + ghost.colour + " ghost " + ghost.name + ' got you!');
