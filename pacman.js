@@ -1,6 +1,7 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
+var powerPellet = 4;
 
 
 // Define your ghosts here
@@ -55,6 +56,7 @@ function clearScreen() {
 
 function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives);
+  console.log('\nPower-Pellets: ' + powerPellet);
 }
 
 function displayMenu() {
@@ -84,7 +86,10 @@ function eatGhost(ghost) {
     return "Munch!";
   } else {
     lives -= 1;
-    console.log('\n' + ghost.name + ' got you!');
+    console.log('\nThe ' + ghost.colour + " ghost " + ghost.name + ' got you!');
+    if (lives < 0) {
+      process.exit();
+    }
   }
 }
 
@@ -115,13 +120,6 @@ function processInput(key) {
       console.log('\nInvalid Command!');
   }
 }
-
-function gameOver(lives) {}
-  if(lives === 0) {
-    process.on('exit', function() {
-      console.log('\n\nGame Over!\n');
-    });
-  }
 
 
 //
